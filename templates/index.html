@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" href="../static/img/icons8-dental-50.png" />
+    <link rel="stylesheet" href="../static/css/main.css" />
+    <title>Clinic Management</title>
+  </head>
+  <body>
+    <div class="form closed" id="add-patient-form" data-form-id>
+      <h2>Add New Patient</h2>
+      <h3>Basic Information</h3>
+      <div class="form-container">
+        <div class="input-fields">
+          <div class="input-group">
+            <label for="name">full name</label>
+            <input type="text" id="name" placeholder="Name" />
+            <span data-status="pending"></span>
+          </div>
+          <div class="input-group">
+            <label for="birth">date of birth</label>
+            <input
+              type="date"
+              id="birth"
+              value="1995-01-01"
+              min="1900-01-01"
+              max="9999-12-31"
+            />
+            <span data-status="pending"></span>
+          </div>
+          <div class="input-group">
+            <label for="phone">phone</label>
+            <input type="text" id="phone" placeholder="0900000000" />
+            <span data-status="pending"></span>
+          </div>
+          <div class="input-group">
+            <label for="gender">gender</label>
+            <select name="gender" id="gender">
+              <option value="male">male</option>
+              <option value="female">female</option>
+            </select>
+          </div>
+        </div>
+        <div class="btn-fields">
+          <a class="btn p-btn dimmed" href="#" id="add-patient-save-btn"
+            >Save</a
+          >
+          <a class="btn acnt-btn" href="#" id="add-patient-close-btn">Close</a>
+        </div>
+      </div>
+    </div>
+    <div class="form closed" id="add-appointment-form" data-form-id>
+      <h2>Add New Appointment</h2>
+      <h3>Basic Information</h3>
+      <div class="form-container">
+        <div class="input-fields">
+          <div class="input-group">
+            <select name="names" id="names-appointment"></select>
+          </div>
+          <div class="input-group">
+            <label for="appointment-date">date of appointment</label>
+            <input
+              type="date"
+              id="appointment-date"
+              min="1900-01-01"
+              max="9999-12-31"
+            />
+            <span data-status="pending"></span>
+          </div>
+          <div class="input-group">
+            <label for="appointment-time">time of appointment</label>
+            <input type="time" id="appointment-time" />
+            <span data-status="pending"></span>
+          </div>
+        </div>
+        <div class="btn-fields">
+          <a class="btn p-btn dimmed" href="#" id="add-appointment-save-btn"
+            >Save</a
+          >
+          <a class="btn acnt-btn" href="#" id="add-appointment-close-btn"
+            >Close</a
+          >
+        </div>
+      </div>
+    </div>
+    <div class="form closed" id="add-case-form" data-form-id>
+      <h2>Add New Case</h2>
+      <h3>Basic Information</h3>
+      <div class="form-container">
+        <div class="input-fields">
+          <div class="input-group">
+            <label for="case-title">Case Title</label>
+            <input type="text" id="case-title" placeholder="case-title" />
+            <span data-status="pending"></span>
+          </div>
+        </div>
+        <div class="btn-fields">
+          <a class="btn p-btn dimmed" href="#" id="add-case-save-btn">Save</a>
+          <a class="btn acnt-btn" href="#" id="add-case-close-btn">Close</a>
+        </div>
+      </div>
+    </div>
+    <div class="form closed" id="add-transaction-form" data-form-id>
+      <h2>Add New Transaction</h2>
+      <h3>Basic Information</h3>
+      <div class="form-container">
+        <div class="input-fields">
+          <div class="input-group">
+            <label for="patients-transactions">Patient Name</label>
+            <select name="names" id="patients-transactions"></select>
+          </div>
+          <div class="input-group">
+            <label for="cases-transactions">Case Title</label>
+            <select name="names" id="cases-transactions"></select>
+          </div>
+          <div class="input-group">
+            <label for="transaction-date">date of transaction</label>
+            <input
+              type="date"
+              id="transaction-date"
+              min="1900-01-01"
+              max="9999-12-31"
+            />
+            <span data-status="pending"></span>
+          </div>
+          <div class="input-group">
+            <label for="transaction-time">time of transaction</label>
+            <input type="time" id="transaction-time" />
+            <span data-status="pending"></span>
+          </div>
+          <div class="input-group">
+            <label for="transaction-amount">amount</label>
+            <input type="number" id="transaction-amount" />
+            <span data-status="pending"></span>
+          </div>
+          <div class="input-group">
+            <label for="transaction-rate">rate</label>
+            <input type="number" id="transaction-rate" />
+            <span data-status="pending"></span>
+          </div>
+          <div class="input-group">
+            <label for="amount-type-transactions">Amount Type</label>
+            <select name="names" id="amount-type-transactions">
+              <option value="1">Debit</option>
+              <option value="2">Credit</option>
+            </select>
+          </div>
+          <div class="input-group">
+            <label for="transaction-notes">notes</label>
+            <textarea
+              name=""
+              id="transaction-notes"
+              cols="30"
+              rows="10"
+            ></textarea>
+            <span data-status="pending"></span>
+          </div>
+        </div>
+        <div class="btn-fields">
+          <a class="btn p-btn dimmed" href="#" id="add-transaction-save-btn"
+            >Save</a
+          >
+          <a class="btn acnt-btn" href="#" id="add-transaction-close-btn"
+            >Close</a
+          >
+        </div>
+      </div>
+    </div>
+    <div class="ledger closed" id="ledger">
+      <span class="x-btn">×</span>
+      <span class="refresh"><i class="bi bi-arrow-clockwise"></i></span>
+      <div class="heading"></div>
+      <div class="ledger-container"></div>
+    </div>
+    <header>
+      <nav>
+        <div class="brand">
+          <h1>Hawzan Clinic</h1>
+        </div>
+        <div class="burger" id="burger"></div>
+        <ul class="links" id="links">
+          <li>
+            <a href="#" class="btn p-btn" id="add-new-patient">+ patient</a>
+          </li>
+          <li>
+            <a href="#" class="btn p-btn" id="add-new-appointment"
+              >+ appointment</a
+            >
+          </li>
+          <li>
+            <a href="#" class="btn p-btn" id="add-new-case">+ case</a>
+          </li>
+          <li>
+            <a href="#" class="btn p-btn" id="add-new-transaction"
+              >+ transaction</a
+            >
+          </li>
+        </ul>
+      </nav>
+    </header>
+    <main>
+      <section>
+        <div class="dash-element" id="patient-profiles">
+          <div class="header">
+            <h3>Patients <span></span></h3>
+          </div>
+          <div class="body"></div>
+        </div>
+        <div class="dash-element" id="appointment-profiles">
+          <div class="header">
+            <h3>Appointments</h3>
+            <div class="radio-container" id="appointment-radio">
+              <input type="radio" name="time" id="today-radio" />
+              <label for="today-radio">Today</label>
+              <input type="radio" name="time" id="upcoming-radio" />
+              <label for="upcoming-radio">Upcoming</label>
+              <input type="radio" name="time" id="all-radio" />
+              <label for="all-radio">All</label>
+            </div>
+          </div>
+          <div class="body"></div>
+        </div>
+        <div class="dash-element" id="trial-balance-profile">
+          <div class="header">
+            <h3>Trial Balance <span></span></h3>
+          </div>
+          <div class="body"></div>
+        </div>
+        <div class="dash-element" id="trial-balance-currency-profile">
+          <div class="header">
+            <h3>Trial Balance Currency <span></span></h3>
+          </div>
+          <div class="body"></div>
+        </div>
+      </section>
+      <section>
+        <div class="dash-element" id="transactions-profile">
+          <div class="header">
+            <h3>Last Transactions</h3>
+          </div>
+          <div class="body"></div>
+        </div>
+      </section>
+    </main>
+    <script src="../static/js/main.js"></script>
+  </body>
+</html>
