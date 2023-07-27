@@ -297,6 +297,7 @@ input[type="radio"]:checked + label::after {
 .form .form-container .input-fields .input-group textarea {
   resize: none;
 }
+input[type="search"],
 .form .form-container .input-fields .input-group input,
 .form .form-container .input-fields .input-group textarea,
 .form .form-container .input-fields .input-group select {
@@ -306,6 +307,7 @@ input[type="radio"]:checked + label::after {
   box-shadow: 1px 1px 1px var(--clr-bg-500);
   background-color: var(--clr-p-600);
 }
+input[type="search"]:not(:placeholder-shown),
 .form .form-container .input-fields .input-group input:not(:placeholder-shown),
 .form
   .form-container
@@ -317,6 +319,9 @@ input[type="radio"]:checked + label::after {
 .form .form-container .input-fields .input-group select:not(:empty) {
   background-color: var(--clr-p-500);
 }
+
+input[type="search"]:hover,
+input[type="search"]:focus,
 .form .form-container .input-fields .input-group input:hover,
 .form .form-container .input-fields .input-group input:focus,
 .form .form-container .input-fields .input-group textarea:hover,
@@ -468,6 +473,7 @@ main section {
   padding: 1em;
   background-color: var(--clr-p-500);
 }
+.dash-element .header .search-form,
 .dash-element .header .radio-container {
   margin-left: auto;
   display: flex;

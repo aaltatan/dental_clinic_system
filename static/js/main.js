@@ -23,6 +23,7 @@ const brand = document.querySelector("nav .brand h1");
 const patientLedger = document.getElementById("ledger");
 const patientLedgerCloseBtn = document.querySelector("#ledger .x-btn");
 const patientLedgerRefreshBtn = document.querySelector("#ledger .refresh");
+const patientSearchBar = document.getElementById("search-bar");
 
 class Form {
   /**
@@ -780,6 +781,23 @@ function getAllPatients() {
         newPatientForm.openFormMethod();
       });
 
+      patientSearchBar.addEventListener("search", () => {
+        let searchValue = patientSearchBar.value.trim();
+        row.classList.add("hide");
+        let re = new RegExp(searchValue, "gi");
+        if (re.test(name)) {
+          row.classList.remove("hide");
+        }
+      });
+      patientSearchBar.addEventListener("keyup", () => {
+        let searchValue = patientSearchBar.value.trim();
+        row.classList.add("hide");
+        let re = new RegExp(searchValue, "gi");
+        if (re.test(name)) {
+          row.classList.remove("hide");
+        }
+      });
+
       editSpan.appendChild(editIcon);
 
       let logSpan = createEl("span", "");
@@ -852,7 +870,7 @@ function loadLedger(id) {
             ["data-transaction-date", transactionDate],
             ["data-transaction-time", transactionTime],
             ["data-transaction-amount", amount],
-            ["data-transaction-rate", rate],
+            ["title", rate.toLocaleString()],
             ["data-transaction-amount-type", amountType]
           );
           let caseTitleSpan = createEl("span", caseTitle, [

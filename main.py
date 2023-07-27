@@ -7,6 +7,67 @@ import json
 import requests
 
 
+def create_all_tables():
+    db = sqlite3.connect("./data/app.db")
+    cr = db.cursor()
+    cr.execute("""
+        CREATE TABLE IF NOT EXISTS dollar_price (
+            dollar_price INT NOT NULL,
+            dollar_price_date TEXT
+        )
+    """)
+    cr.execute(
+        "CREATE TABLE IF NOT EXISTS cases(case_id INTEGER PRIMARY KEY AUTOINCREMENT,case_title TEXT)"
+    )
+    cr.execute("""
+        CREATE TABLE IF NOT EXISTS patients (
+            patient_id INTEGER PRIMARY KEY AUTOINCREMENT,
+            patient_name TEXT,
+            birth TEXT,
+            phone TEXT,
+            gender TEXT
+        )
+    """)
+    cr.execute("""
+        CREATE TABLE IF NOT EXISTS appointments (
+            appointment_id INTEGER PRIMARY KEY AUTOINCREMENT,
+            patient_id INTEGER NOT NULL,
+            appointment_date TEXT,
+            appointment_time TEXT,
+            FOREIGN KEY (patient_id) REFERENCES patients (patient_id)
+        )   
+    """)
+    cr.execute("""
+        CREATE VIEW IF NOT EXISTS get_all_appointments
+        AS
+        SELECT 
+            appointment_id,appointments.patient_id,patient_name,appointment_date,appointment_time 
+        FROM 
+            appointments
+        LEFT JOIN
+            patients
+        WHERE
+            patients.patient_id = appointments.patient_id
+    """)
+    cr.execute("""
+        CREATE TABLE IF NOT EXISTS transactions (
+            transaction_id INTEGER PRIMARY KEY AUTOINCREMENT,
+            patient_id INTEGER NOT NULL,
+            case_id INTEGER NOT NULL,
+            transaction_date TEXT NOT NULL,
+            transaction_time TEXT NOT NULL,
+            amount INTEGER,
+            rate INTEGER,
+            amount_type TEXT,
+            notes TEXT,
+        FOREIGN KEY (patient_id) REFERENCES patients (patient_id),
+        FOREIGN KEY (case_id) REFERENCES cases (case_id)
+    )
+    """)
+    db.commit()
+    db.close()
+
+
 def get_dollar_price_liira():
     try:
         url = "https://liira-sy.com/"
@@ -134,9 +195,6 @@ def get_all_appointments_db():
 def add_new_case(case_id, case_title):
     db = sqlite3.connect("./data/app.db")
     cr = db.cursor()
-    cr.execute(
-        "CREATE TABLE IF NOT EXISTS cases(case_id INTEGER PRIMARY KEY AUTOINCREMENT,case_title TEXT)"
-    )
     if case_id:
         cr.execute("SELECT case_id FROM cases")
         case_ids = [i[0] for i in cr.fetchall()]
@@ -161,9 +219,6 @@ def get_all_cases_db():
     db = sqlite3.connect("./data/app.db")
     cr = db.cursor()
     cr.execute(
-        "CREATE TABLE IF NOT EXISTS cases(case_id INTEGER PRIMARY KEY AUTOINCREMENT,case_title TEXT)"
-    )
-    cr.execute(
         "SELECT * FROM cases")
     data = cr.fetchall()
     db.commit()
@@ -184,21 +239,6 @@ def add_new_transaction_db(
 ):
     db = sqlite3.connect("./data/app.db")
     cr = db.cursor()
-    cr.execute("""
-    CREATE TABLE IF NOT EXISTS transactions (
-        transaction_id INTEGER PRIMARY KEY AUTOINCREMENT,
-        patient_id INTEGER NOT NULL,
-        case_id INTEGER NOT NULL,
-        transaction_date TEXT NOT NULL,
-        transaction_time TEXT NOT NULL,
-        amount INTEGER,
-        rate INTEGER,
-        amount_type TEXT,
-        notes TEXT,
-    FOREIGN KEY (patient_id) REFERENCES patients (patient_id),
-    FOREIGN KEY (case_id) REFERENCES cases (case_id)
-    )
-    """)
     if transaction_id:
         cr.execute("SELECT transaction_id FROM transactions")
         transaction_ids = [i[0] for i in cr.fetchall()]
@@ -260,21 +300,6 @@ def add_new_transaction_db(
 def get_patient_transactions_db(id):
     db = sqlite3.connect("./data/app.db")
     cr = db.cursor()
-    cr.execute("""
-    CREATE TABLE IF NOT EXISTS transactions (
-        transaction_id INT PRIMARY KEY AUTOINCREMENT,
-        patient_id INT NOT NULL,
-        case_id INT NOT NULL,
-        transaction_date TEXT NOT NULL,
-        transaction_time TEXT NOT NULL,
-        amount INT,
-        rate INT,
-        amount_type TEXT,
-        notes TEXT,
-    FOREIGN KEY (patient_id) REFERENCES patients (patient_id),
-    FOREIGN KEY (case_id) REFERENCES cases (case_id)
-    )
-    """)
     if id:
         cr.execute("""
         SELECT 
@@ -450,4 +475,5 @@ def add_header(response):
 
 
 if __name__ == "__main__":
-    app.run(port=8500)
+    create_all_tables()
+    app.run(debug=True, port=8500)
